@@ -23,7 +23,7 @@ import javafx.scene.control.Slider;
 public class PrimaryController {
     @FXML
     private ChoiceBox<String> choice;
-    private final String[] choices = {"black yellow","yellow black","red blue","blue red","green black","black green"};
+    private final String[] choices = {"black yellow","yellow black","red blue","blue red","green black","black green","purple yellow","yellow purple"};
     @FXML
     public void initialize(){
         choice.getItems().addAll(choices);
@@ -175,6 +175,38 @@ public class PrimaryController {
                     double newRed = ((weight1 * 0) + (weight2 * red))/100d;
                     double newGreen = ((weight1 * inverse) + (weight2 * green))/100d;
                     double newBlue =  ((weight1 * 0 ) + (weight2 * blue))/100d;
+                    Color color2 = new Color(newRed,newGreen,newBlue,1f);
+                    pixelWriter.setColor(x, y, color2);
+                }
+            }
+        }else if(choice.getValue().equals("purple yellow")){
+            for(int x = 0;x < pixelsWidth;x++){
+                for(int y = 0;y < pixelsHeight;y++){
+                    Color color = pixelReader.getColor(x, y);
+                    double red = color.getRed();
+                    double green = color.getGreen();
+                    double blue = color.getBlue();
+                    double avg = (red + green + blue) / 3d;
+                    double inverse = 1d - avg;
+                    double newRed = ((weight1 * 1) + (weight1 * avg) + (weight2 * red))/(weight1+weight1+weight2);
+                    double newGreen = ((weight1 * avg) + (weight2 * green))/100d;;
+                    double newBlue =  ((weight1 * inverse) + (weight2 * blue))/100d;
+                    Color color2 = new Color(newRed,newGreen,newBlue,1f);
+                    pixelWriter.setColor(x, y, color2);
+                }
+            }
+        }else if(choice.getValue().equals("yellow purple")){
+            for(int x = 0;x < pixelsWidth;x++){
+                for(int y = 0;y < pixelsHeight;y++){
+                    Color color = pixelReader.getColor(x, y);
+                    double red = color.getRed();
+                    double green = color.getGreen();
+                    double blue = color.getBlue();
+                    double avg = (red + green + blue) / 3d;
+                    double inverse = 1d - avg;
+                    double newRed = ((weight1 * 1) + (weight1 * inverse) + (weight2 * red))/(weight1+weight1+weight2);
+                    double newGreen = ((weight1 * inverse) + (weight2 * green))/100d;;
+                    double newBlue =  ((weight1 * avg) + (weight2 * blue))/100d;
                     Color color2 = new Color(newRed,newGreen,newBlue,1f);
                     pixelWriter.setColor(x, y, color2);
                 }
